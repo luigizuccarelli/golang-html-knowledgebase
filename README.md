@@ -1,4 +1,4 @@
-# A simple golang microservice to rendr static html
+# A simple golang microservice to render static html
 
 
 ## Overview
