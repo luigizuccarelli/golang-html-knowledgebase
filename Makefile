@@ -3,6 +3,7 @@
 all: clean test build
 
 build: 
+	mkdir -p build
 	go build -o build ./...
 
 test:
@@ -16,7 +17,7 @@ clean:
 	go clean ./...
 
 container:
-	podman build -t  tfld-docker-prd-local.repo.14west.io/golang-simple-oc4service:1.14.2 .
+	podman build -t  quay.io/luigizuccarelli/golang-html-knowledgebase:latest .
 
 push:
-	podman push tfld-docker-prd-local.repo.14west.io/golang-simple-oc4service:1.14.2 
+	podman push quay.io/luigizuccarelli/golang-html-knowledgebase:latest 
