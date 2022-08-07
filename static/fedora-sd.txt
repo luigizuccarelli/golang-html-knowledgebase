@@ -1,0 +1,5 @@
+work around for sd card detect
+
+rmmod sdhci sdhci_pci sdhci_acpi
+modprobe sdhci debug_quirks2="0x1000"
+modprobe sdhci_pci

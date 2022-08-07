@@ -1,0 +1,7 @@
+ stats
+
+#vmstat
+vmstat -s | awk  ' $0 ~ /total memory/ {total=$1 } $0 ~/free memory/ {free=$1} $0 ~/buffer memory/ {buffer=$1} $0 ~/cache/ {cache=$1} END {print (total-free-buffer-cache)/total*100}'
+
+#top
+top -b -n 5 -d.2 | grep "Cpu" | tail -n1 | awk '{print($2)}' | cut -d'%' -f 1

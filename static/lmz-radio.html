@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>internet radio</title>
+
+  </head>
+
+  <body>
+
+  <section id="container" >
+    <div style="margin-top:150px;margin-left:150px;width: auto;font-family:Courier;font-size: 15px;font-weight: none">
+      <table>
+        <tr>
+          <td>&nbsp;1:</td><td>luigi mario zuccarelli (lmzsoftware)</td>
+        </tr>
+        <tr>
+          <td>&nbsp;2:</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;3:</td><td>internet radio</td>
+        </tr>
+        <tr>
+          <td>&nbsp;4:</td><td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;5:</td><td>a simple internet radio</td>
+        </tr>
+        <tr>
+          <td>&nbsp;6:</td><td>it expresses simplicity and ease of use</td>
+        </tr>
+        <tr>
+          <td>&nbsp;7:</td><td>and reflects who i am - a simple programmer</td>
+        </tr>
+        <tr>
+          <td>&nbsp;8:</td><td>&nbsp;</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>&nbsp;9:</td><td>(O)-----+</td><td style="text-align:center">select radio</td><td>+-----(O)</td>
+        </tr>
+        <tr>
+          <td>10:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+        <tr onclick="javascript:updateStation('1','http://live.bluesradio.gr:8352/stream','Blues Radio Athens');" style="cursor: pointer">
+          <td>11:</td><td style="text-align:right">+</td><td id="1">blues radio athens</td><td>+</td>
+        </tr>
+        <tr>
+          <td>12:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+        <tr onclick="javascript:updateStation('2','http://wbgo.streamguys.net:80/wbgo128','WBGO Jazz');" style="cursor: pointer">
+          <td>13:</td><td style="text-align:right">+</td><td id="2">wbgo jazz</td><td>+</td>
+        </tr>
+        <tr>
+          <td>14:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+        <tr onclick="javascript:updateStation('3','http://149.255.59.3:8232/stream','Blues Radio UK');" style="cursor: pointer">
+          <td>15:</td><td style="text-align:right">+</td><td id="3">blues radio uk</td><td>+</td>
+        </tr>
+        <tr>
+          <td>16:</td><td style="text-align:right"></td><td>&nbsp;</td><td></td>
+        </tr>
+        <tr>
+          <td>17:</td><td style="text-align:right"></td><td>&nbsp;</td><td></td>
+        </tr>
+        <tr>
+          <td>18:</td><td style="text-align:right"></td><td>&nbsp;</td><td></td>
+        </tr>
+        <tr>
+          <td>19:</td><td style="text-align:right"></td><td>&gt;&nbsp;<a href="javascript:audioStart();">play</a>&nbsp;&nbsp;&gt;&nbsp;<a href="javascript:audioStop();">stop</a>&nbsp;</td><td></td>
+        </tr>
+      </table>
+    </div>
+    
+  </section>
+
+    
+  <script>
+          var myaudioURL = 'http://37.59.14.77:8352/;'
+          var myaudio = new Audio(myaudioURL);
+          var isPlaying = false;
+          var currentStation = "Blues Radio Athens";
+
+          myaudio.addEventListener("error", function() {
+			      console.log('myaudio ERROR');
+		      }, false);
+		      
+          myaudio.addEventListener("canplay", function() {
+			      console.log('myaudio CAN PLAY');
+		      }, false);
+		
+          myaudio.addEventListener("waiting", function() {
+			      console.log('myaudio WAITING');
+			      isPlaying = false;
+		      }, false);
+		
+          myaudio.addEventListener("playing", function() {
+		      }, false);
+
+		      myaudio.addEventListener("ended", function() {
+			      console.log('myaudio ENDED');
+		      }, false);
+
+          function audioStart() {
+            if (!isPlaying) {
+              myaudio.play();
+              isPlaying = true;
+            }
+          }
+
+          function audioStop() {
+            myaudio.pause();
+		        myaudio = null;
+		        myaudio = new Audio(myaudioURL);
+            isPlaying = false;
+          }
+
+          function updateStation(control,url,station) {
+            if (myaudio) {
+              myaudio.pause();
+            }
+		        myaudio = null;
+		        myaudio = new Audio(url);
+            myaudioURL = url;
+            currentStation = station;
+            document.getElementById('1').style.color="black";
+            document.getElementById('2').style.color="black";
+            document.getElementById('3').style.color="black";
+            document.getElementById(control).style.color="red";
+            isPlaying = false;
+          }
+
+  </script>
+  </body>
+</html>
+

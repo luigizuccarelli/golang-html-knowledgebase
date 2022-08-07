@@ -1,0 +1,4 @@
+git tags howto
+                
+git fetch --all --tags --prune
+git checkout tags/release-3.16.0-rc1 -b v3.16.0

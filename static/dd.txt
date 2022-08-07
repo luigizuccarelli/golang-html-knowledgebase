@@ -1,0 +1,7 @@
+script to run dd with progress
+
+sudo dd if=image of=/dev/mmcblk0
+watch -n5 'sudo kill -USR1 $(pgrep ^dd)'
+
+# execute parted resize from 8G to 16G
+resizef2s /dev/mmcblk0p2

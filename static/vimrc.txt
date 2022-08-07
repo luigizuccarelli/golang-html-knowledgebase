@@ -1,0 +1,10 @@
+example .vimrc 
+vimrc file contents for golang and airline plugin support
+
+call plug#begin('~/.vim/plugged')
+ 'fatih/vim-go'
+ 'vim-airline/vim-airline'
+ 'vim-airline/vim-airline-themes'
+ 'Valloric/YouCompleteMe'
+ 'airblade/vim-gitgutter'
+call plug#end()

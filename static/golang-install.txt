@@ -1,0 +1,25 @@
+script to install golang
+
+
+wget https://storage.googleapis.com/golang/go1.7.linux-amd64.tar.gz
+tar -xvf go1.7.linux-amd64.tar.gz
+mv go /usr/local
+
+export GOROOT=/usr/local/go
+export GOROOT=$HOME/Projects/Proj
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+go env
+ GOARCH="amd64"
+ GOBIN=""
+ GOEXE=""
+ GOHOSTARCH="amd64"
+ GOHOSTOS="linux"
+ GOOS="linux"
+ GOPATH="/home/tecadmin/Projects/Proj"
+ GORACE=""
+ GOROOT="/usr/local/go"
+ GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64"
+ CC="gcc"
+ GOGCCFLAGS="-fPIC -m64 -pthread -fmessage-length=0"
+ CXX="g++"
+ CGO_ENABLED="1"

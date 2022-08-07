@@ -1,0 +1,13 @@
+servers
+                
+10.42.0.1 192.168.1.3 mac (gateway) nginx and mongodbproxy (luigi:gaasdm)
+10.42.0.50 compaq mongodb 27017 (luigi:gaasdm06)
+10.42.0.52 hp app server (luigi:lmz123)
+10.42.0.58 pi2 (pi:gaasdm06) model 2 B
+10.42.0.84 piA (pi:gaasdm06) model B
+10.42.0.150 pi (pi:raspberry) model 3 B 64bit
+10.42.0.73 pine64 (ubuntu:lmz123) 64bit
+10.42.0.38 pine64 (ubuntu:lmz123) 64bit
+10.42.0.152 pine64 (ubuntu:lmz123) 64bit
+10.42.0.175 pine64 (ubuntu:lmz123) 64bit
+10.42.0.135 pine64 (ubuntu:lmz123) 64bit

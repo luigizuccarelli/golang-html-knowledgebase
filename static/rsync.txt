@@ -1,0 +1,3 @@
+rsync script
+                
+rsync --rsh='oc rsh -c millicore' box.war millicore-19-ars2r:/opt/webserver/webapps/

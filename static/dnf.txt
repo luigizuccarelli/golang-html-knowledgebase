@@ -1,0 +1,3 @@
+dnf check duplicates
+                
+dnf --showduplicates list

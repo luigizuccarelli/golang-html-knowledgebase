@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>home</title>
+
+  </head>
+
+  <body>
+
+  <section id="container" >
+    <div style="margin-top:150px;margin-left:150px;width: auto;font-family:Courier;font-size: 15px;font-weight: none">
+      <table>
+        <tr>
+          <td>&nbsp;1:</td><td>luigi mario zuccarelli 2022</td>
+        </tr>
+        <tr>
+          <td>&nbsp;2:</td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;3:</td><td><b>home page knowledge base</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;4:</td><td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;5:</td><td>a knowledge base search utility</td>
+        </tr>
+        <tr>
+          <td>&nbsp;6:</td><td>making use of simple html and javascript</td>
+        </tr>
+        <tr>
+          <td>&nbsp;7:</td><td>it expresses simplicity and ease of use</td>
+        </tr>
+        <tr>
+          <td>&nbsp;8:</td><td>and reflects who i am - a simple programmer</td>
+        </tr>
+        <tr>
+          <td>&nbsp;9:</td><td>&nbsp;</td>
+        </tr>
+      </table>
+      <table id="content">
+        <tr>
+          <td>10:</td><td>(!)-----+</td><td style="text-align:center">search</td><td>+-----(!)</td>
+        </tr>
+        <tr>
+          <td>11:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+        <tr>
+          <td>12:</td><td style="text-align:right">+</td><td id="1" style="text-align: center">&nbsp;<input id=txtSearch type="text" style="width: 320px;height: 25px">&nbsp;</input></td><td>+</td>
+        </tr>
+        <tr>
+          <td>13:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+        <tr>
+          <td>14:</td><td style="text-align:right">+</td><td id="1" style="text-align: center">&nbsp;
+            <button onclick="javascript:searchItem();" style="width: 80px;height: 25px">search</button>&nbsp;&nbsp;
+            <button onclick="javascript:clearSearch();" style="width: 80px;height: 25px">clear</button>&nbsp;
+          </td><td>+</td>
+        </tr>
+        <tr>
+          <td>15:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+        <tr>
+          <td>16:</td><td style="text-align:right">+</td><td style="text-align:center">results</td><td>+</td>
+        </tr>
+        <tr>
+          <td>17:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
+        </tr>
+      </table>
+      </br>
+      <div id="file" style="white-space: pre; border-radius: 20px; padding: 20px; background: #dedede; width: 80%; display: none">&nbsp;</div>
+    </div>
+  </section>
+
+    
+  <script>
+          function searchItem() {
+            let html = "";
+            let search = document.getElementById('txtSearch');
+            let xhttp = new XMLHttpRequest();
+            let count = 18;
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                let el = document.getElementById('content');
+                var obj = JSON.parse(this.responseText);
+                lines = obj.message.split("\n");
+                for (i=0; i < lines.length; i++) {
+                  if (lines[i].indexOf(".txt") > 1) {
+                    let href = lines[i].substring(2,lines[i].indexOf(":"));
+                    html += "<tr><td>" + (count) + ":</td><td style=\"text-align:right\">+</td>&nbsp;<td style=\"text-align: left\">&nbsp;<a style=\"color: red\" href=\"javascript:showFile('"+ href + "');\">" + lines[i] + "&nbsp;</a></td>&nbsp;<td>+</td></tr>";
+                    count++;
+                  }
+                }
+                el.innerHTML +=  html ;
+              }
+            }
+            xhttp.open("POST", "/api/v1/search");
+            xhttp.setRequestHeader("Accept", "application/json");
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(`{"search":"` + search.value +`"}`);
+            return;
+          }
+
+          function clearSearch() {
+            location.href="/lmz-main.html";
+          }
+
+          function showFile(file) {
+             let xhttp = new XMLHttpRequest();
+             xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                let kb = document.getElementById('file');
+                kb.innerHTML = this.responseText;
+                kb.style.display = "block";
+              }
+            }
+            xhttp.open("GET", "/" + file);
+            xhttp.send();
+            return;
+          }
+  </script>
+  </body>
+</html>

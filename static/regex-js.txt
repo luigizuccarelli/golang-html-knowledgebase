@@ -1,0 +1,4 @@
+regex-js
+
+grep -ir '/box\|/api' --include="*.js" public/javascript/app/ | grep -v '//' | grep -v '/\*' | grep -v '\*/'
+grep -ior "/box[a-zA-Z0-9\/?=&lt;&gt;\.\"&amp;\+[:space:]_()'|-]*\|/api[a-zA-z0-9\/?=&lt;&gt;\.\"&amp;\+[:space:]_()'|-]*" --include="*.js" public/javascript/app/ | cut -d':' -f2<br>
