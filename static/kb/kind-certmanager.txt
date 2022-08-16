@@ -1,0 +1,5 @@
+Kind certmanager
+
+sudo podman exec $(sudo podman ps -a | grep kindest | awk '{print $1}') "/bin/sh" "-c" "cat /etc/kubernetes/controller-manager.conf" > ~/.kube/kind-config 
+
+sudo kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml

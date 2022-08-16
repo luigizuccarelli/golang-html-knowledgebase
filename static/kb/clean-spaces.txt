@@ -1,0 +1,3 @@
+Clean trailing whitespace
+
+%s/\s\+$//e

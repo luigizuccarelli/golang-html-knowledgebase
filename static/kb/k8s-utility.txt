@@ -1,0 +1,44 @@
+kubectl get namespace "stucked-namespace" -o json \
+  | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
+  | kubectl replace --raw /api/v1/namespaces/stucked-namespace/finalize -f -
+
+
+setupSSH.sh
+
+#!/bin/bash
+  2 keyfile="/home/${USER}/.ssh/tmp_key"
+  3 sshKeyGen=/usr/bin/ssh-keygen
+  4 auth_keys="/home/${USER}/.ssh/authorized_keys"
+  5 $sshKeyGen -t rsa -f "$keyfile" -N ""
+  6 cat "${keyfile}.pub" >> "$auth_keys"
+  7 chmod 644 "$auth_keys"
+  8 cp "${keyfile}.pub" "/home/${USER}/.ssh/id_rsa.pub"
+  9 cp "${keyfile}" "/home/${USER}/.ssh/id_rsa"
+ 10 rm "$keyfile"
+
+t.sh
+case ${1} in
+ 85   kill)
+ 86     tmux kill-session -t ${2}
+ 87     exit 0
+ 88     ;;
+ 89   list)
+ 90     tmux list-session
+ 91     exit 0
+ 92     ;;
+ 93   attach)
+ 94     tmux attach -t ${2}
+ 95     exit 0
+ 96     ;;
+ 97   dev)
+ 98     tmux new-session -d -s dev -n "Kube Dev Cluster"
+ 99     tmux select-layout even-vertical
+100     tmux split-window -v
+101     tmux select-pane -t 0
+102     tmux send-keys -t dev.0 'ssh -i ~/.ssh/stablekey ubuntu@10.210.44.78' Enter
+103     tmux send-keys -t dev.1 'ls -la' Enter
+104     tmux attach -t dev
+105     ;;
+106 
+107 esac
+

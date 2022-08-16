@@ -45,7 +45,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request, conn connectors.Clien
 		return
 	}
 
-	out, err := conn.ExecOS("static", "grep", []string{"-irn", req.Search, "."}, false)
+	out, err := conn.ExecOS("static/kb", "grep", []string{"-irn", req.Search, "."}, false)
 	conn.Trace("Execute process %s %s", "grep", out)
 
 	response = &schema.Response{Code: http.StatusOK, Status: "OK", Message: out}

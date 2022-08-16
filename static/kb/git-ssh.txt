@@ -1,0 +1,33 @@
+Git ssh setup
+
+identity
+eval `ssh-agent`
+ssh-add ~/.ssh/id_rsa_rn
+
+Gdiff
+vim commands
+Gdiffsplit! // 3 way split
+diffget //2 - this gets left side to center
+diffget //3 - this gets right side to center
+
+git checkout BZ1964112
+git reset BZ1964112-NEW
+git reset --hard
+git push -f
+
+git fetch origin pull/ID/head:BRANCHNAME
+
+# Repo: someuser/myframework
+# Fork: superteam/myframework
+
+# Track:
+git clone https://github.com/superteam/myframework.git
+cd myframework
+git remote add upstream https://github.com/someuser/myframework.git
+
+# Update:
+git fetch upstream
+git rebase upstream/master
+git push
+git push --tags
+

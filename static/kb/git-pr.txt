@@ -1,0 +1,3 @@
+Git fetch PR
+
+git fetch origin pull/$ID/head:$BRANCHNAME

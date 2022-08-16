@@ -1,0 +1,5 @@
+remove stuck namespace
+
+kubectl get namespace "namespace" -o json  | tr -d "\n" | sed "s/\"finalizers\": [^]]\+\]/\"finalizers\": []/" | kubectl replace --raw /api/v1/namespaces/namespace/finalize -f -
+
+oc get events -n projectcontour --sort-by='.metadata.creationTimestamp'
