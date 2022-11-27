@@ -1,5 +1,0 @@
-upstream to do source filtering by label
-
-add jira task
-
-add jira task matrix - azure.gov, aws.gov, gcp.gov etc

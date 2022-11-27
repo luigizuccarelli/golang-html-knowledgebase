@@ -1,3 +1,0 @@
-script to run ssh-tunnel
-
-the -L 2000:personal-server.com:25 is in the form of -L local-port:host:remote-port

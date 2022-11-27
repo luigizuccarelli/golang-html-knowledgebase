@@ -1,7 +1,0 @@
-CRC ssh
-
-ssh -i ~/.crc/machines/crc/id_ecdsa core@api.crc.testing
-
-192.168.130.11 api.crc.testing canary-openshift-ingress-canary.apps-crc.testing console-openshift-console.apps-crc.testing default-route-openshift-image-registry.apps-crc.testing downloads-openshift-console.apps-crc.testing oauth-openshift.apps-crc.testing
-
-current ka-pwd 3CZUf-GtQPw-axnXs-XcMkX

@@ -1,3 +1,0 @@
-mount remote directory with sshfs
-
-sshfs lzuccarelli@192.168.8.108:/home/lzuccarelli/Projects /home/lzuccarelli/Projects/remote-dir/

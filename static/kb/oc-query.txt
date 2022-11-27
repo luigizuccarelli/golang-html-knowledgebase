@@ -1,3 +1,0 @@
-oc query                
-
-oc get dc fh-mbaas --template `"{{(index .spec.template.spec.containers 0).image}}"` 

@@ -1,9 +1,0 @@
-dnf check duplicates
-                
-dnf --showduplicates list
-
-dnf upgrade
-sudo dnf --refresh upgrade
-sudo dnf system-upgrade download --releasever=36
-sudo dnf system-upgrade reboot
-sudo dnf system-upgrade clean

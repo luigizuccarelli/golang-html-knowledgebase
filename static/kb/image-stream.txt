@@ -1,3 +1,0 @@
-image stream                
-
-oc get is nodejs -n openshift -o yaml

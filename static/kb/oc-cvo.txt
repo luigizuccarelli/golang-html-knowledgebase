@@ -1,3 +1,0 @@
-oc cvo patch
-
-oc patch clusterversions/version --type=json --patch='[{"op":"add","path":"/spec/overrides","value":[{"kind":"Deployment","group":"apps/v1","name":"ingress-operator","namespace":"openshift-ingress-operator","unmanaged":true}]}]'

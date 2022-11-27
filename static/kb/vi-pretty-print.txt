@@ -1,4 +1,0 @@
-vi pretty print json
-
-%!python -mjson.tool
-

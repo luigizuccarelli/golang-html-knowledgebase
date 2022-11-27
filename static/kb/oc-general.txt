@@ -1,9 +1,0 @@
-oc commands
-
-kubectl get events  --sort-by='.metadata.creationTimestamp'
-
-kubectl delete pod <PODNAME> --grace-period=0 --force --namespace <NAMESPACE>
-
-oc get pod podname -o yaml | oc adm policy scc-subject-review -f -
-
-oc adm policy add-scc-to-user <scc> -z <sa> -n <namespace>

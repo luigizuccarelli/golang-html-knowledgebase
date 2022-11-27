@@ -1,3 +1,0 @@
-Podman remove images
-
-podman rmi -f $(podman images | grep -e ^\<none\> | awk '{print $3}')

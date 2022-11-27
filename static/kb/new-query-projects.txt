@@ -1,1 +1,0 @@
-project = cfe OR project in (CMP, "OpenShift Workloads") AND labels = cfeplan ORDER BY key DESC, Rank ASC
