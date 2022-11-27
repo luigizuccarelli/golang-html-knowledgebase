@@ -1,0 +1,1 @@
+project = CFE and (resolution in (Done) or status in ("In Progress")) AND (assignee in ("luzuccar@redhat.com") or "Additional Assignees" in ("luzuccar@redhat.com")) ORDER BY updated DESC, priority DESC

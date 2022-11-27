@@ -1,0 +1,67 @@
+# now that we have shown the tekton pipeline overview lets deploy tekton to our kubernetes cluster
+
+# install tekton using this command
+# kubectl apply -f https://storage.googleapis.com/tekton-releases/operator/latest/release.yaml
+
+# lets list all the objects in the tekton pipeline namespace
+#  k get all -n tekton-pipelines
+
+# lets clone the okd operator build pipeline
+# git clone git@github.com:okd-project/pipelines.git
+
+# install tekton operator pipeline to our kubernetes cluster using kustomize
+# k apply -k /environments/overlay/cicd
+
+# list all the object in the pipeline
+# k get all -n operator-pipeline
+
+# tkn pipeline start pipeline-dev-all --param repo-url=https://github.com/openshift/node-observability-operator --param repo-name=node-observability-operator --param base-image-registry=quay.io/luzuccar --param bundle-version=v0.0.1 --workspace name=shared-workspace,claimName=pipeline-pvc-dev -n operator-pipeline
+
+# as it takes about 6 to 10 minutes to execute the full pipeline I will show the logs of a previous
+succesful run (taskrun and each step)
+
+tkn pipeline list -n operator-pipeline
+
+tkn pr describe pipeline-dev-all-run-dc8dc  -n operator-pipeline
+
+tkn tr logs pipeline-dev-all-run-dc8dc-fetch-repository  -n operator-pipeline -s clone
+
+tkn tr describe pipeline-dev-all-run-dc8dc-container-all -n operator-pipeline
+
+tkn tr logs pipeline-dev-all-run-dc8dc-container-all -n operator-pipeline  -s verify
+
+tkn tr logs pipeline-dev-all-run-dc8dc-container-all -n operator-pipeline -n operator-pipeline  -s
+unit-test
+
+tkn tr logs pipeline-dev-all-run-dc8dc-container-all -n operator-pipeline  -s build
+
+tkn tr logs pipeline-dev-all-run-dc8dc-container-all -n operator-pipeline  -s runtime-docker
+
+tkn tr logs pipeline-dev-all-run-dc8dc-container-all -n operator-pipeline -n operator-pipeline  -s contianer-build-and-push
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s bundle
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s bundle-dockerfile-check
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s bundle-image-push
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s index-image-build
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s index-image-push
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s catalog-image-build
+
+tkn tr logs pipeline-dev-all-run-dc8dc-bundle-all -n operator-pipeline -s catalog-image-push
+
+
+
+
+
+
+
+
+
+
+
+
+

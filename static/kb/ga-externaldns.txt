@@ -1,0 +1,9 @@
+PM -> GA
+ - What is GA
+   - Confidence
+   - Thoroughly tested
+   - LifeCycle
+   - install maintain upgrade logs
+   - well documented
+   -  
+

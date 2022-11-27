@@ -1,0 +1,14 @@
+# setup to step through go tests
+cd pkg/cli/mirror
+
+dlv test *.go -- -test.run TestBulkImageCopy
+
+break copy_test.go:620
+
+continue
+
+
+dlv debug cmd/oc-mirror/main.go -- --config ~/Projects/iscfg.yaml --use-oci-feature --oci-feature-action=mirror docker://localhost:5000/rhopi --dest-skip-tls
+
+dlv debug cmd/oc-mirror/main.go -- --config ~/Projects/iscfg.yaml --use-oci-feature --oci-feature-action=copy oci://lmz-test
+

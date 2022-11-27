@@ -1,0 +1,143 @@
+ oc -n node-observability-operator get pods
+NAME                                                              READY   STATUS    RESTARTS   AGE
+node-observability-ds-4n2xn                                       2/2     Running   2          14m
+node-observability-ds-7ndqg                                       2/2     Running   2          14m
+node-observability-ds-m4vb7                                       2/2     Running   2          14m
+node-observability-operator-controller-manager-67849bd478-t5qrj   2/2     Running   0          7m44s
+
+$ oc apply -f config/samples/nodeobservability_v1alpha1_nodeobservability.yaml
+nodeobservability.nodeobservability.olm.openshift.io/cluster created
+
+$ oc get mcp
+NAME                CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master              rendered-master-543d1e27c632a7c7ab89e2e7dd12c814   True      False      False      3              3                   3                     0                      25m
+nodeobservability                                                      False     True       False      3              0                   0                     0                      10s
+worker              rendered-worker-faf4b4b607c3a249ab840bed1b31d485   True      False      False      0              0                   0                     0                      25m
+
+$ oc get nobmc
+NAME      AGE
+cluster   18s
+
+$ oc get nobmc cluster -o yaml
+apiVersion: nodeobservability.olm.openshift.io/v1alpha1
+kind: NodeObservabilityMachineConfig
+metadata:
+  creationTimestamp: "2022-08-11T21:47:23Z"
+  finalizers:
+  - NodeObservabilityMachineConfig
+  generation: 1
+  name: cluster
+  ownerReferences:
+  - apiVersion: nodeobservability.olm.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: NodeObservability
+    name: cluster
+    uid: 3c0b3e35-5c63-496c-9ddf-75b19df187af
+  resourceVersion: "31768"
+  uid: 73f43005-714d-4792-8888-c6dafe7e63c3
+spec:
+  debug:
+    enableCrioProfiling: true
+status:
+  conditions:
+  - lastTransitionTime: "2022-08-11T21:47:23Z"
+    message: debug configurations enabled
+    reason: Enabled
+    status: "True"
+    type: DebugEnabled
+  - lastTransitionTime: "2022-08-11T21:47:23Z"
+    message: applying debug configurations in progress
+    reason: Progressing
+    status: "False"
+    type: Ready
+  lastReconcile: "2022-08-11T21:47:23Z"
+  
+$ oc get nodes
+NAME                                       STATUS                     ROLES                      AGE   VERSION
+ci-ln-cwm0t0t-72292-vjrhb-master-0         Ready                      control-plane,master       28m   v1.24.0+a9d6306
+ci-ln-cwm0t0t-72292-vjrhb-master-1         Ready                      control-plane,master       28m   v1.24.0+a9d6306
+ci-ln-cwm0t0t-72292-vjrhb-master-2         Ready                      control-plane,master       28m   v1.24.0+a9d6306
+ci-ln-cwm0t0t-72292-vjrhb-worker-a-zcd9k   Ready,SchedulingDisabled   nodeobservability,worker   19m   v1.24.0+a9d6306
+ci-ln-cwm0t0t-72292-vjrhb-worker-b-8lkrv   Ready                      nodeobservability,worker   17m   v1.24.0+a9d6306
+ci-ln-cwm0t0t-72292-vjrhb-worker-c-k9cq8   Ready                      nodeobservability,worker   19m   v1.24.0+a9d6306
+
+$ oc get mcp
+NAME                CONFIG                                                        UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master              rendered-master-543d1e27c632a7c7ab89e2e7dd12c814              True      False      False      3              3                   3                     0                      38m
+nodeobservability   rendered-nodeobservability-c7278bfa12929e436a4bf005ec87466a   True      False      False      3              3                   3                     0                      12m
+worker              rendered-worker-faf4b4b607c3a249ab840bed1b31d485              True      False      False      0              0                   0                     0                      38m
+
+$ oc get nobmc cluster -o yaml
+apiVersion: nodeobservability.olm.openshift.io/v1alpha1
+kind: NodeObservabilityMachineConfig
+metadata:
+  creationTimestamp: "2022-08-11T21:47:23Z"
+  finalizers:
+  - NodeObservabilityMachineConfig
+  generation: 1
+  name: cluster
+  ownerReferences:
+  - apiVersion: nodeobservability.olm.openshift.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: NodeObservability
+    name: cluster
+    uid: 3c0b3e35-5c63-496c-9ddf-75b19df187af
+  resourceVersion: "38393"
+  uid: 73f43005-714d-4792-8888-c6dafe7e63c3
+spec:
+  debug:
+    enableCrioProfiling: true
+status:
+  conditions:
+  - lastTransitionTime: "2022-08-11T21:47:23Z"
+    message: debug configurations enabled
+    reason: Enabled
+    status: "True"
+    type: DebugEnabled
+  - lastTransitionTime: "2022-08-11T21:57:22Z"
+    message: Machine config update to enable debugging completed on all machines
+    reason: Ready
+    status: "True"
+    type: Ready
+  lastReconcile: "2022-08-11T21:57:22Z"
+
+$ oc apply -f config/samples/nodeobservability_v1alpha1_nodeobservabilityrun.yaml
+nodeobservabilityrun.nodeobservability.olm.openshift.io/nodeobservabilityrun-sample created
+
+$ for a in $(oc get nodeobservabilityrun nodeobservabilityrun-sample -o yaml | yq .status.agents[].name); do   echo "agent ${a}";   mkdir -p "/tmp/${a}";   for p in $(oc exec "${a}" -c node-observability-agent -- bash -c "ls /run/node-observability/*.pprof"); do     f="$(basename ${p})";     echo "copying ${f} to /tmp/${a}/${f}";     oc exec "${a}" -c node-observability-agent -- cat "${p}" > "/tmp/${a}/${f}";   done; done
+agent node-observability-ds-4n2xn
+copying crio-94b1164a-1d26-4c90-a50f-6423ebd5354c.pprof to /tmp/node-observability-ds-4n2xn/crio-94b1164a-1d26-4c90-a50f-6423ebd5354c.pprof
+copying kubelet-94b1164a-1d26-4c90-a50f-6423ebd5354c.pprof to /tmp/node-observability-ds-4n2xn/kubelet-94b1164a-1d26-4c90-a50f-6423ebd5354c.pprof
+agent node-observability-ds-7ndqg
+copying crio-f137acea-0a75-4855-a385-117724463e6b.pprof to /tmp/node-observability-ds-7ndqg/crio-f137acea-0a75-4855-a385-117724463e6b.pprof
+copying kubelet-f137acea-0a75-4855-a385-117724463e6b.pprof to /tmp/node-observability-ds-7ndqg/kubelet-f137acea-0a75-4855-a385-117724463e6b.pprof
+agent node-observability-ds-m4vb7
+copying crio-e2a0f2e3-2b65-4a6c-ae62-de9341d88383.pprof to /tmp/node-observability-ds-m4vb7/crio-e2a0f2e3-2b65-4a6c-ae62-de9341d88383.pprof
+copying kubelet-e2a0f2e3-2b65-4a6c-ae62-de9341d88383.pprof to /tmp/node-observability-ds-m4vb7/kubelet-e2a0f2e3-2b65-4a6c-ae62-de9341d88383.pprof
+
+$ ls -ltr /tmp/node-observability-ds-*
+-rw-rw-r--. 1 alebedev alebedev  7337 Aug 12 00:04 crio-94b1164a-1d26-4c90-a50f-6423ebd5354c.pprof
+-rw-rw-r--. 1 alebedev alebedev 26189 Aug 12 00:04 kubelet-94b1164a-1d26-4c90-a50f-6423ebd5354c.pprof
+
+/tmp/node-observability-ds-7ndqg:
+total 36
+-rw-rw-r--. 1 alebedev alebedev  7138 Aug 12 00:04 crio-f137acea-0a75-4855-a385-117724463e6b.pprof
+-rw-rw-r--. 1 alebedev alebedev 27169 Aug 12 00:04 kubelet-f137acea-0a75-4855-a385-117724463e6b.pprof
+
+/tmp/node-observability-ds-m4vb7:
+total 32
+-rw-rw-r--. 1 alebedev alebedev  5507 Aug 12 00:04 crio-e2a0f2e3-2b65-4a6c-ae62-de9341d88383.pprof
+-rw-rw-r--. 1 alebedev alebedev 21476 Aug 12 00:04 kubelet-e2a0f2e3-2b65-4a6c-ae62-de9341d88383.pprof
+
+$ oc delete nob cluster
+nodeobservability.nodeobservability.olm.openshift.io "cluster" deleted
+
+$ oc get nobmc
+No resources found
+
+$ oc get mcp
+NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master   rendered-master-543d1e27c632a7c7ab89e2e7dd12c814   True      False      False      3              3                   3                     0                      47m
+worker   rendered-worker-faf4b4b607c3a249ab840bed1b31d485   False     True       True       3              0                   0                     3                      47m

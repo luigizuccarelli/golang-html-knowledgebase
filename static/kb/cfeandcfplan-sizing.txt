@@ -1,0 +1,27 @@
+Heather has added 6 issues in the CFEPLAN TEch Discovery column, please could you take a look at the
+issues assigned to you and do a high level estimate (most important) as we need this for 4.12
+planning the sizing is based on T-Shirt sizing
+- esp-small : less than a sprint
+- esp-medium : 2 sprints
+- esp-large : 3 sprints
+- esp-extralarge : more than 3 sprints
+
+
+13 point story
+- New implementation for functioning operator with 1 custom resource / RBAC
+- Code complex ++ / to create
+- Needs scaffolding 
+- QE envolvement
+- Doc envolvement
+- Unit tests
+- End to end tests
+
+# 8 point story
+- https://issues.redhat.com/browse/CFE-182
+- E2E tests for all platforms/all features of the operator
+- CI configuration
+- Doc for local execution of the tests
+
+# 5 points story
+- https://issues.redhat.com/browse/CFE-157
+- API change introducing a new configuration element in the CSV, with behavior modification of the reconcile

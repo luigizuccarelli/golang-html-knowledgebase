@@ -1,0 +1,23 @@
+In our meeting Christian proposed
+
+- Set up a meeting with OCTO regarding operate-first (dedicated OKD or OCP clusters)
+- Once we have the infrastructure
+- Deploy our operator build tekton pipeline on it for the community
+- Clone the current Jenkins RHCOS pipeline make the modifications for SCOC and install it (not for
+  community -internal only)
+- Parallel to this once the CoreOS assembler work has been merged, we will manually build SCOS
+
+[okd-rpms]
+name=OKD RPMs
+baseurl=/srv/okd-repo
+enabled=1
+repo_gpgcheck=0
+type=rpm
+gpgcheck=0
+skip_if_unavailable=False
+
+
+cosa upload-oscontainer --arch-tag --name=quay.io/aleskandrox/scos
+cosa push-container --format=v2s2 --tag-suffix=base-image quay.io/aleskandrox/scos
+
+

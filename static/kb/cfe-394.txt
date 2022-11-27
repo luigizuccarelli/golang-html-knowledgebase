@@ -1,0 +1,22 @@
+27-04-2022 Meeting with Sascha & Bharat
+---------------------------------------
+
+Notes
+-----
+
+Node observe reference
+Creates mc 
+
+prfile - kubelet
+         crio
+
+
+         collect profile data
+         enable kube
+         enable crio
+
+
+         e2e state before and after
+
+
+

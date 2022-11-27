@@ -1,0 +1,15 @@
+go run cmd/registry/main.go serve cmd/registry/config-example.yml
+
+view all images
+curl -X GET http://localhost:5000/v2/_catalog | jq
+
+ curl -sS <domain-on-ip>:5000/v2/<repo>/tags/lista
+
+ curl -sS -H 'Accept: application/vnd.docker.distribution.manifest.v2+json' \
+-o /dev/null \
+-w '%header{Docker-Content-Digest}' \
+<domain-or-ip>:5000/v2/<repo>/manifests/<tag>
+
+curl -sS -H 'Accept: application/vnd.docker.distribution.manifest.v2+json' http://localhost:5000/v2/alpine/manifests/latest | jq
+
+ curl -sS -X DELETE <domain-or-ip>:5000/v2/<repo>/manifests/<digest >

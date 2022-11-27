@@ -1,0 +1,27 @@
+**Mounting the go-build and golangci-lint cache files**
+
+- If you are experiencing problems with mounting the cache directories
+in the container to speed up linting and building, try doing the following (this is specifically for SELinux enabled OS's)
+
+```bash
+# check chcon settings
+ls -LZ <pv-directory-for-cache>/.cache/go-build
+# it should have the following settings 
+# system_u:object_r:container_file_t:s0
+# update if not
+sudo chcon -R system_u:object_r:container_file_t:s0 <pv-directory-for-cache>/.cache/go-build
+# repeat for golangci-lint
+```
+- In fact if you have any problems with mounting any other directory check the SELinux
+settings and apply the *system_u:object_r:container_file_t:s0* via chcon
+
+
+check the tekton-pipeline project on kind/ocp
+ensure the pod tekton-triggers-core-interceptors is running (user 65532 is a problem)
+
+ensure sa pipeline is tied to a clusterrolebinding i.e edit or admin
+
+podman clean
+-----------
+
+podman rmi -f $(podman images | grep '^<none>'  | awk '{print $3}' )

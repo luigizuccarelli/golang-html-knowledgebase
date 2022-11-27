@@ -1,0 +1,56 @@
+22/06/2022
+
+Meeting with Vadim
+------------------
+
+artifact - release image
+
+https://github.com/openshift/cluster-version-operator
+
+operator framework - reference access.io promote to okd
+
+ocp
+release-controller 
+
+
+how to test - follow the guide
+
+any snapshot of OKD
+machine-os
+mco layering
+
+
+automation to build scos image
+
+
+machine-os 
+
+https://github.com/openshift/okd-machine-os
+
+mco hardest part -> machine-os
+
+https://github.com/openshift/os
+https://github.com/openshift/os/tree/c9s
+https://github.com/vrutkovs/okd-machine-os/tree/master-coreos-layering
+
+https://github.com/openshift/cluster-version-operator
+https://amd64.ocp.releases.ci.openshift.org/releasestream/4.11.0-0.ci/release/4.11.0-0.ci-2022-06-22-032524
+https://github.com/openshift/okd/blob/master/CONTRIBUTING.md
+https://amd64.origin.releases.ci.openshift.org/#4.11.0-0.okd
+https://github.com/openshift/okd-machine-os
+https://github.com/openshift/os
+https://github.com/openshift/os/tree/c9s
+https://github.com/vrutkovs/okd-machine-os/tree/master-coreos-layering
+
+
+https://github.com/openshift/machine-config-operator/tree/layering
+https://hackmd.io/LIK_IOnER-6kuIQWAVn5dQ?view
+
+e2e test
+
+https://hackmd.io/tDnHM2BoQru0VgqMGI_Q5g
+
+
+okd installer
+
+

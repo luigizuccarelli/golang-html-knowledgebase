@@ -50,7 +50,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request, conn connectors.Clien
 
 	response = &schema.Response{Code: http.StatusOK, Status: "OK", Message: out}
 	b, _ := json.MarshalIndent(response, "", "	")
-	conn.Debug(fmt.Sprintf("iSearchHandler response : %s", string(b)))
+	conn.Debug(fmt.Sprintf("SearchHandler response : %s", string(b)))
 	fmt.Fprintf(w, "%s", string(b))
 }
 

@@ -10,11 +10,12 @@
 
   <body>
 
-  <section id="container" >
-    <div style="margin-top:150px;font-family:Courier;font-size: 15px;font-weight: none;display: flex; justify-content: center;">
-      <table id="content">
+      <section id="container" > 
+      <div style="margin-top:150px;font-family:Courier;font-size: 15px;font-weight: none;display: flex; justify-content: center;">
+      <table>
+        <tbody id="content">
         <tr>
-          <td>&nbsp;1:</td><td>&nbsp;</td><td>luigi mario zuccarelli 2022</td><td>&nbsp;</td>
+          <td>&nbsp;1:</td><td>&nbsp;</td><td style="width:1000px">luigi mario zuccarelli 2022</td><td>&nbsp;</td>
         </tr>
         <tr>
           <td>&nbsp;2:</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
@@ -53,11 +54,6 @@
           <td>13:</td>
           <td style="text-align:right">+</td>
           <td style="text-align: center">&nbsp;
-            <!--select id="txtType" type="text" style="width: 326px;height: 35px">
-              <option value="./static/kb">knowledgebase</option>
-              <option value="$HOME/documents">documents</option>
-              <option value="$HOME/Projects">projects<option>
-              </select>-->
           </td>
           <td>+</td>
         </tr>
@@ -82,17 +78,21 @@
         <tr>
           <td>18:</td><td style="text-align:right">|</td><td>&nbsp;</td><td>|</td>
         </tr>
+      </tbody>
       </table>
-  </section>
+      </div>
+      </section>
 
     
   <script>
+          let count = 19;
+
           function searchItem() {
+            let arr = [];
             let html = "";
             let search = document.getElementById('txtSearch');
             //let option = document.getElementById("txtType");
             let xhttp = new XMLHttpRequest();
-            let count = 19;
             xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
                 let el = document.getElementById('content');
@@ -101,17 +101,22 @@
                 for (i=0; i < lines.length; i++) {
                   if (lines[i].indexOf(".txt") > 1) {
                     let href = lines[i].substring(2,lines[i].indexOf(":"));
-                    html += "<tr><td>" + (count) + ":</td><td style=\"text-align:right\">+</td>&nbsp;<td style=\"text-align: left\">&nbsp;<a style=\"color: blue;text-decoration: none\" href=\"javascript:showFile('"+ href + "');\">" + lines[i].substring(lines[i].indexOf(":")) + "&nbsp;</a></td>&nbsp;<td>+</td></tr>";
-                    count++;
+                    if (!arr.includes(href)) {
+                        arr.push(href.trim())
+                    }
                   }
                 }
-                el.innerHTML +=  html ;
+
+                for (x=0; x < arr.length; x++) {
+                    html += "<tr><td>" + (count) + ":</td><td style=\"text-align:right\">+</td><td style=\"text-align: left;\">&nbsp;<a style=\"color: blue;text-decoration: none\" href=\"javascript:showFile('"+ arr[x] + "');\">" + arr[x] + "</a></td><td>+</td></tr>";
+                    count++;
+                }
+                  el.innerHTML +=  html + "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
               }
             }
             xhttp.open("POST", "/api/v1/search");
             xhttp.setRequestHeader("Accept", "application/json");
             xhttp.setRequestHeader("Content-Type", "application/json");
-            //xhttp.send(`{"search":"` + option.value + "/" + search.value +`"}`);
             xhttp.send(`{"search":"` + search.value +`"}`);
             return;
           }
@@ -125,7 +130,7 @@
              xhttp.onreadystatechange = function() {
               if (this.readyState == 4 && this.status == 200) {
                 let kb = document.getElementById('content');
-                kb.innerHTML += "<tr><td></td><td></td><td style=\"white-space: pre; border-radius: 20px; padding: 20px; background: #3a3a3a; color: white; display: block\">" + this.responseText + "</td><td></td></tr>"
+                kb.innerHTML += "<tr><td></td><td></td><td style=\"width:1000px;white-space: pre; border-radius: 20px; padding: 20px; background: #3a3a3a; color: white; display: block\">" + this.responseText + "</td><td></td></tr>"
               }
             }
             xhttp.open("GET", "/kb/" + file);

@@ -1,0 +1,78 @@
+Meeting 27/07/2022
+
+
+file base catalog
+
+minimize volume of imgaes
+huge list of images - in different groups
+
+filter out images
+oci file merging
+
+pre-process file catalog
+
+pull catalog image down
+
+catalog is on bastion host
+
+
+original goal catlogs
+
+
+go.mod - kubernetesv0.0.0 version kaka
+navigate to github.com/kubernetes/kubernetes and look for the lates commit hash
+
+echo 'require k8s.io/kubernetes 02ac8ac4181e179c'
+echo 'replace ('
+curl -sS https://raw.githubusercontent.com/kubernetes/kubernetes/02ac8ac4181e179c2f030a9f8b1abef0d9a0b512/go.mod \
+| sed -n -r 's# \./staging/(.*)$# k8s.io/kubernetes/staging/\1 02ac8ac4181e179c#p'
+echo ')'
+
+
+multiversion
+-----------
+
+
+module multiversion
+
+go 1.13
+
+
+replace github.com/pkg/errors/081 => github.com/pkg/errors v0.8.1
+
+replace github.com/pkg/errors/091 => github.com/pkg/errors v0.9.1
+
+
+package main
+
+import (
+
+    "fmt"
+
+    errors081 "github.com/pkg/errors/081"
+    errors091 "github.com/pkg/errors/091"
+)
+
+func main() {
+    err := errors081.New("New error for v0.8.1")
+    fmt.Println(err)
+    err = errors091.New("New error for v0.9.1")
+    fmt.Println(err)
+}
+$ ./multiversion
+New error for v0.8.1
+New error for v0.9.1
+
+
+module github.com/pselle/foo
+
+replace github.com/pselle/bar => /Users/pselle/Projects/bar
+
+require (
+	github.com/pselle/bar v1.0.0
+)
+
+
+bin/registry serve cmd/registry/config-example.yml
+
+

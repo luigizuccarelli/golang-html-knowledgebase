@@ -1,0 +1,1 @@
+(filter = "OCP Portfolio Filter" OR filter = "All AlongSide Epics") AND issuetype = Epic AND fixVersion = "OpenShift 4.11" AND labels in (cfe-plan) AND issueFunction in parentsOf("issueFunction in subtasksOf(\"Planning in ('TE Needed', 'Customer Facing') \") and summary ~ 'TE Tracker'  and status in ('New')   ")

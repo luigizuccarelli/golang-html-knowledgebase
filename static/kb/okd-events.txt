@@ -1,0 +1,10 @@
+Jan - DevConf.cz
+Feb - FOSDEM
+Mar - Chemnitzer Linux Tage
+May - KubeCon Europe
+Jun - ContainerDays
+Aug - Flock
+Aug - DevConf.us
+Aug - GUADEC
+Sep - All Systems Go!
+Nov - KubeCon North America

@@ -1,0 +1,7 @@
+### Overview
+
+This section describes a high level "howto" when encountering problems with the deployment of the
+NodeObservability Operator.
+It is by no means an exhaustive list of problems but should help the user to navigate the common
+errors experienced in geting the operator to work.
+
